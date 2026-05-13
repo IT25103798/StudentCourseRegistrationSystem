@@ -1,0 +1,19 @@
+CRS2|Algorithms|Computer Science|Prof. Michael Smith|25|25|4|Tue/Thu 9:00-10:30
+CRS3|Web Development|Information Technology|Prof. Emily Williams|20|19|3|Mon/Wed 2:00-3:30
+CRS4|Database Systems|Information Technology|Prof. David Brown|30|29|3|Tue/Thu 11:00-12:30
+CRS5|Software Engineering|Software Engineering|Prof. Lisa Davis|25|24|4|Wed/Fri 1:00-2:30
+CRS6|Computer Networks|Computer Science|Prof. Robert Wilson|28|27|3|Mon/Wed 3:00-4:30
+CRS7|Operating Systems|Computer Science|Prof. Patricia Miller|25|25|4|Tue/Thu 2:00-3:30
+CRS8|Artificial Intelligence|Data Science|Prof. James Taylor|20|19|4|Wed/Fri 10:00-11:30
+CRS9|Machine Learning|Data Science|Prof. Jennifer Anderson|25|24|4|Mon/Wed 1:00-2:30
+CRS10|Cyber Security|Cyber Security|Prof. Thomas Martinez|30|29|3|Tue/Thu 3:00-4:30
+CRS11|Cloud Computing|Information Technology|Prof. Linda Garcia|22|22|3|Wed/Fri 2:00-3:30
+CRS12|Mobile App Development|Software Engineering|Prof. Christopher Lee|20|20|3|Mon/Wed 11:00-12:30
+CRS13|Data Structures|Computer Science|A.Kalana Hansaka|3|3|3|mon/Wed 11:00-12:30
+CRS14|Object Oriented Programming|Computer Science|Prof. Sarah Johnson|1|0|1|mon/Wed 11:00-12:30
+CRS15|Data Structures|Computer Science|A.Kalana Hansaka|2|2|2|mon/Wed 11:00-12:30
+CRS16|Object Oriented Programming|Information Technology|A.Kalana Hansaka|4|4|1|mon/Wed 11:00-12:30
+CRS17|Object Oriented Programming|Computer Science|Kalana Hansaka|4|2|4|mon/Wed 11:00-12:30
+CRS18|Object Oriented Programming|Computer Science|Prof. Sarah Johnson|4|4|3|mon/Wed 11:00-12:30
+CRS19|Object Oriented Programming|null|null|4|4|1|mon/Wed 11:00-12:30
+CRS20|Object Oriented Programming|null|null|5|5|1|mon/Wed 11:00-12:30
