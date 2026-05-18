@@ -1,0 +1,10 @@
+USR1|admin|admin123|admin@system.com|admin
+USR3|jane|pass123|jane@student.com|student
+USR4|Hansaka|asd123|mr.kalanahansaka@gmail.com|student
+USR6|sarah|sarah123|sarah@university.com|lecturer|LEC001
+USR7|michael|michael123|michael@university.com|lecturer|LEC002
+USR8|Tharusha|asd123|mr.kalanahansaka@gmail.com|lecturer|LEC004
+USR9|udara|u12345|udara10@gamil.com|student
+USR10|sheema|sheema123|sheemafarwin@gmail.com|lecturer|LEC003
+USR11|hashini|123456|hashini@gmail.com|student
+USR12|semini|2089|semini@2004.com|lecturer|LEC004
