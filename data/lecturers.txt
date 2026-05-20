@@ -1,0 +1,3 @@
+LEC002|Prof. Michael Smith|michael@university.com|+94 12 345 6790|Computer Science|Algorithms|Ph.D|2024-01-20|active
+LEC003|sheema farwin|sheemafarwin@gmail.com|0012345552|Computer Science|Computer Science|M.Sc|2026-05-05|active
+LEC004|semini|semini@2004.com|0876565768|Information Technology|Computer Science|M.Sc|2026-05-21|active
