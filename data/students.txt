@@ -1,0 +1,4 @@
+USR3|jane|pass123|jane@student.com|student|STU002|Information Technology|2
+USR4|Hansaka|asd123|mr.kalanahansaka@gmail.com|student|IT25103798|Software Engineering|1
+USR9|udara|u12345|udara10@gamil.com|student|it25103803|ð± Information Technology|2
+USR11|hashini|123456|hashini@gmail.com|student|it251038031|ð» Computer Science|2
