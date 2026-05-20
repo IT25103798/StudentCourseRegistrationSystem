@@ -2,12 +2,24 @@
 <%@ page import="java.util.*, com.registration.model.Course" %>
 <%@ page import="com.registration.dao.CourseDAO" %>
 <%@ page import="com.registration.dao.LecturerDAO" %>
+<%@ page import="com.registration.dao.FeedbackDAO" %>
+<%@ page import="com.registration.model.Feedback" %>
 <%@ page import="com.registration.model.Lecturer" %>
 <%
     CourseDAO courseDAO = new CourseDAO();
     List<Course> courses = courseDAO.getAllCourses();
     LecturerDAO lecturerDAO = new LecturerDAO();
     List<Lecturer> allLecturers = lecturerDAO.getAllLecturers();
+    FeedbackDAO feedbackDAO = new FeedbackDAO();
+
+    // Build average ratings map
+    Map<String, Double> avgRatingMap = new HashMap<>();
+    Map<String, List<Feedback>> courseFeedbackMap = new HashMap<>();
+    for (Course c : courses) {
+        double avg = feedbackDAO.getAverageRatingForCourse(c.getCourseId());
+        avgRatingMap.put(c.getCourseId(), avg);
+        courseFeedbackMap.put(c.getCourseId(), feedbackDAO.getFeedbacksByCourse(c.getCourseId()));
+    }
 
     String role = (String) session.getAttribute("role");
     String username = (String) session.getAttribute("username");
@@ -53,8 +65,8 @@
         .nav-link { color: rgba(255, 255, 255, 0.8) !important; font-weight: 500; margin: 0 0.3rem; padding: 8px 18px !important; border-radius: 40px; transition: all 0.3s; }
         .nav-link:hover { background: rgba(255, 255, 255, 0.1); color: white !important; }
         .nav-link.active { background: linear-gradient(135deg, #a855f7, #7c3aed); color: white !important; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
-        .btn-logout { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 8px 22px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.3s; margin-left: 8px; }
-        .btn-logout:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(239, 68, 68, 0.3); }
+        .btn-logout { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; transition: all 0.3s; margin-left: 8px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .btn-logout:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(239, 68, 68, 0.3); color: white; }
 
         /* Container */
         .course-container { padding: 100px 0 50px; position: relative; z-index: 1; }
@@ -89,16 +101,19 @@
         .courses-table tr:hover { background: rgba(255, 255, 255, 0.03); }
 
         /* Badges */
-        .badge-available { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; }
-        .badge-full { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; }
-        .badge-credits { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; padding: 3px 8px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; }
-        .badge-dept { background: rgba(245, 158, 11, 0.2); color: #fcd34d; padding: 3px 8px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; }
+        .badge-available { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; }
+        .badge-full { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 3px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; }
+        .badge-credits { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; padding: 3px 8px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; }
+        .badge-dept { background: rgba(245, 158, 11, 0.2); color: #fcd34d; padding: 3px 8px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; display: inline-block; }
 
         /* Action Buttons */
-        .btn-edit { background: #f59e0b; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; margin: 0 2px; }
+        .btn-edit { background: #f59e0b; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; margin: 0 2px; cursor: pointer; white-space: nowrap; }
         .btn-edit:hover { background: #d97706; }
-        .btn-delete { background: #ef4444; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; margin: 0 2px; }
+        .btn-delete { background: #ef4444; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; margin: 0 2px; cursor: pointer; white-space: nowrap; }
         .btn-delete:hover { background: #dc2626; }
+        .btn-reviews { background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.4); color: #fcd34d; padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; cursor: pointer; white-space: nowrap; }
+        .btn-reviews:hover { background: rgba(245,158,11,0.35); }
+        .actions-cell { white-space: nowrap; }
 
         /* Empty State */
         .empty-state { text-align: center; padding: 50px; color: rgba(255, 255, 255, 0.6); }
@@ -145,6 +160,8 @@
                     <li class="nav-item"><a class="nav-link active" href="courses">Courses</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin?action=queue">Queue</a></li>
                     <li class="nav-item"><a class="nav-link" href="manage-students.jsp">Students</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage-admins">Admins</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage-enrollments">Enrollments</a></li>
                     <li class="nav-item"><a class="nav-link" href="manage-lecturers">Lecturers</a></li>
                     <li class="nav-item"><a class="nav-link" href="reports.jsp">Reports</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin-feedback.jsp">Feedback</a></li>
@@ -154,7 +171,7 @@
                     <li class="nav-item"><a class="nav-link" href="register-course">Register</a></li>
                     <li class="nav-item"><a class="nav-link" href="queue-status">Queue</a></li>
                 <% } %>
-                <li class="nav-item"><a class="btn-logout" href="logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                <li class="nav-item"><a class="btn-logout" href="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
     </div>
@@ -213,16 +230,17 @@
                         <tr>
                             <th>ID</th><th>Course Name</th><th>Department</th><th>Instructor</th>
                             <th>Credits</th><th>Seats</th><th>Available</th><th>Schedule</th><th>Status</th>
+                            <th>Reviews</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% if(courses.isEmpty()) { %>
-                            <td><td colspan="10" class="empty-state">
+                            <tr><td colspan="11" class="empty-state">
                                 <i class="fas fa-info-circle"></i>
                                 <h6>No courses found</h6>
                                 <button class="btn btn-primary-custom mt-2" data-bs-toggle="modal" data-bs-target="#addCourseModal"><i class="fas fa-plus"></i> Add Course</button>
-                              </td>
+                              </td></tr>
                         <% } else {
                             for(Course course : courses) {
                                 boolean available = course.getAvailableSeats() > 0;
@@ -240,6 +258,20 @@
                                 <td><small><%= course.getSchedule() %></small></td>
                                 <td><% if(available) { %><span class="badge-available">Available</span><% } else { %><span class="badge-full">Full</span><% } %></td>
                                 <td>
+                                <%
+                                    double avgRating = avgRatingMap.getOrDefault(course.getCourseId(), 0.0);
+                                    int reviewCount = courseFeedbackMap.getOrDefault(course.getCourseId(), new ArrayList<>()).size();
+                                %>
+                                <% if (reviewCount > 0) { %>
+                                    <button class="btn-reviews" onclick="viewReviews('<%= course.getCourseId() %>','<%= course.getCourseName().replace("'","\\x27") %>')">
+                                        <i class="fas fa-star" style="color:#f59e0b;"></i>
+                                        <%= String.format("%.1f", avgRating) %> (<%= reviewCount %>)
+                                    </button>
+                                <% } else { %>
+                                    <span style="color:rgba(255,255,255,0.3); font-size:0.75rem;">No reviews</span>
+                                <% } %>
+                                </td>
+                                <td class="actions-cell">
                                     <button class="btn-edit" onclick='editCourse("<%= course.getCourseId() %>","<%= course.getCourseName() %>","<%= dept %>","<%= course.getInstructor() %>",<%= course.getTotalSeats() %>,<%= course.getCredits() %>,"<%= course.getSchedule() %>")'><i class="fas fa-edit"></i> Edit</button>
                                     <button class="btn-delete" onclick="confirmDelete('<%= course.getCourseId() %>','<%= course.getCourseName() %>')"><i class="fas fa-trash"></i> Delete</button>
                                   </td>
@@ -320,8 +352,70 @@
     </div>
 </footer>
 
+<!-- Reviews Modal -->
+<div class="modal fade" id="reviewsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="background:#1e1b4b; border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:white;">
+            <div class="modal-header" style="border-bottom:1px solid rgba(255,255,255,0.1);">
+                <h5 class="modal-title"><i class="fas fa-star me-2" style="color:#f59e0b;"></i>Course Reviews: <span id="reviewsCourseTitle"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter:invert(1)"></button>
+            </div>
+            <div class="modal-body" id="reviewsBody">
+                <p style="color:rgba(255,255,255,0.5);">Loading...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Feedback data from server
+    var allFeedbacks = {
+<%
+    boolean firstCourse = true;
+    for (Course c : courses) {
+        List<Feedback> fbs = courseFeedbackMap.getOrDefault(c.getCourseId(), new java.util.ArrayList<>());
+        if (!firstCourse) out.print(",");
+        firstCourse = false;
+        out.print("\"" + c.getCourseId() + "\":[");
+        boolean firstFb = true;
+        for (Feedback fb : fbs) {
+            if (!firstFb) out.print(",");
+            firstFb = false;
+            String safeComment = fb.getComment().replace("\\","\\\\").replace("\"","\\\"").replace("\n","\\n");
+            out.print("{\"student\":\"" + fb.getStudentName() + "\",\"rating\":" + fb.getRating() +
+                    ",\"comment\":\"" + safeComment + "\",\"date\":\"" + fb.getFeedbackDate().toString().substring(0,10) + "\"}");
+        }
+        out.print("]");
+    }
+%>
+    };
+
+    function viewReviews(courseId, courseName) {
+        document.getElementById('reviewsCourseTitle').textContent = courseName;
+        var feedbacks = allFeedbacks[courseId] || [];
+        var html = '';
+        if (feedbacks.length === 0) {
+            html = '<p style="color:rgba(255,255,255,0.5); text-align:center; padding:20px;">No reviews yet.</p>';
+        } else {
+            feedbacks.forEach(function(fb) {
+                var stars = '';
+                for (var i = 1; i <= 5; i++) {
+                    stars += '<i class="fas fa-star" style="color:' + (i <= fb.rating ? '#f59e0b' : 'rgba(255,255,255,0.2)') + '; font-size:0.85rem;"></i>';
+                }
+                html += '<div style="background:rgba(255,255,255,0.05); border-radius:14px; padding:16px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.08);">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+                    '<strong style="font-size:0.9rem;">' + fb.student + '</strong>' +
+                    '<span style="color:rgba(255,255,255,0.45); font-size:0.75rem;">' + fb.date + '</span></div>' +
+                    '<div style="margin-bottom:8px;">' + stars + '</div>' +
+                    '<p style="color:rgba(255,255,255,0.8); font-size:0.85rem; margin:0;">' + fb.comment + '</p>' +
+                    '</div>';
+            });
+        }
+        document.getElementById('reviewsBody').innerHTML = html;
+        new bootstrap.Modal(document.getElementById('reviewsModal')).show();
+    }
+
     function editCourse(id,name,dept,instructor,seats,credits,schedule){
         document.getElementById('editCourseId').value=id;
         document.getElementById('editCourseName').value=name;
