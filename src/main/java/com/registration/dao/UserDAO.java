@@ -323,4 +323,19 @@ public class UserDAO {
     public int getStudentCount() {
         return FileHandler.readAllLines(STUDENTS_FILE).size();
     }
+
+    // READ - Find student by their studentId field (e.g. "STU001")
+    public Student findStudentByStudentId(String studentId) {
+        List<String> lines = FileHandler.readAllLines(STUDENTS_FILE);
+        for (String line : lines) {
+            String[] parts = line.split("\\|");
+            if (parts.length >= 8 && parts[5].equalsIgnoreCase(studentId.trim())) {
+                return new Student(
+                        parts[0], parts[1], parts[2], parts[3],
+                        parts[5], parts[6], Integer.parseInt(parts[7])
+                );
+            }
+        }
+        return null;
+    }
 }
