@@ -27,11 +27,24 @@ public class DeleteStudentServlet extends HttpServlet {
         }
 
         String userId = request.getParameter("userId");
+        String studentIdParam = request.getParameter("studentId"); // e.g. STU001
         String studentName = request.getParameter("studentName");
 
         System.out.println("=== DELETING STUDENT ===");
         System.out.println("User ID: " + userId);
+        System.out.println("Student ID param: " + studentIdParam);
         System.out.println("Student Name: " + studentName);
+
+        // If studentId (e.g. STU001) is provided instead of system userId, resolve it
+        if ((userId == null || userId.trim().isEmpty()) && studentIdParam != null && !studentIdParam.trim().isEmpty()) {
+            com.registration.model.Student found = userDAO.findStudentByStudentId(studentIdParam);
+            if (found != null) {
+                userId = found.getId();
+            } else {
+                response.sendRedirect("manage-students.jsp?error=Student ID not found: " + studentIdParam);
+                return;
+            }
+        }
 
         if (userId == null || userId.trim().isEmpty()) {
             response.sendRedirect("manage-students.jsp?error=Invalid student ID");

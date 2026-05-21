@@ -48,7 +48,7 @@
         .nav-link { color: rgba(255, 255, 255, 0.8) !important; font-weight: 500; margin: 0 0.3rem; padding: 8px 18px !important; border-radius: 40px; transition: all 0.3s; }
         .nav-link:hover { background: rgba(255, 255, 255, 0.1); color: white !important; }
         .nav-link.active { background: linear-gradient(135deg, #a855f7, #7c3aed); color: white !important; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
-        .btn-logout { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 8px 22px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.3s; margin-left: 8px; }
+        .btn-logout { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; transition: all 0.3s; margin-left: 8px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .btn-logout:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(239, 68, 68, 0.3); }
 
         /* Container */
@@ -134,10 +134,12 @@
                 <li class="nav-item"><a class="nav-link" href="courses">Courses</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin?action=queue">Queue</a></li>
                 <li class="nav-item"><a class="nav-link active" href="manage-students.jsp">Students</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage-admins">Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage-enrollments">Enrollments</a></li>
                 <li class="nav-item"><a class="nav-link" href="manage-lecturers">Lecturers</a></li>
                 <li class="nav-item"><a class="nav-link" href="reports.jsp">Reports</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin-feedback.jsp">Feedback</a></li>
-                <li class="nav-item"><a class="btn-logout" href="logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                <li class="nav-item"><a class="btn-logout" href="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
     </div>
@@ -200,6 +202,26 @@
             </div>
         </div>
 
+        <!-- Delete by Student ID -->
+        <div class="content-card" style="border-color:rgba(239,68,68,0.2);">
+            <div style="font-size:1rem; font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:8px; color:white;">
+                <i class="fas fa-user-times" style="color:#ef4444;"></i> Delete Student by Student ID
+            </div>
+            <form onsubmit="confirmDeleteByStudentId(event)">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="filter-label">Student ID (e.g. STU002, IT25103798)</label>
+                        <input type="text" id="deleteByStudentIdInput" class="form-control search-input" placeholder="Enter student registration ID">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-sm" style="background:linear-gradient(135deg,#ef4444,#dc2626); color:white; border:none; border-radius:40px; padding:8px 22px; font-weight:600;">
+                            <i class="fas fa-trash me-1"></i>Delete Student
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <!-- Students Table -->
         <div class="content-card">
             <div class="table-responsive">
@@ -216,7 +238,7 @@
                     </thead>
                     <tbody id="tableBody">
                         <% if(students.isEmpty()) { %>
-                            <td><td colspan="6" class="text-center py-5 opacity-50">No students found</td></tr>
+                            <tr><td colspan="6" class="text-center py-5 opacity-50">No students found</td></tr>
                         <% } else {
                             for(Student student : students) { %>
                                 <tr data-name="<%= student.getUsername().toLowerCase() %>" data-id="<%= student.getStudentId().toLowerCase() %>" data-email="<%= student.getEmail().toLowerCase() %>" data-dept="<%= student.getDepartment() %>" data-semester="<%= student.getSemester() %>">
@@ -317,6 +339,7 @@
     function resetFilters(){document.getElementById('searchInput').value='';document.getElementById('deptFilter').value='all';document.querySelectorAll('#tableBody tr[data-name]').forEach(r=>r.style.display='');sortTable();}
     function editStudent(id,username,studentId,email,department,semester){document.getElementById('editUserId').value=id;document.getElementById('editUsername').value=username;document.getElementById('editStudentId').value=studentId;document.getElementById('editEmail').value=email;document.getElementById('editDepartment').value=department;document.getElementById('editSemester').value=semester;new bootstrap.Modal(document.getElementById('editStudentModal')).show();}
     function deleteStudent(userId,username){if(confirm('Delete "'+username+'"? This cannot be undone.')){window.location.href='DeleteStudentServlet?userId='+userId;}}
+    function confirmDeleteByStudentId(e){e.preventDefault();var sid=document.getElementById('deleteByStudentIdInput').value.trim();if(!sid){alert('Please enter a Student ID.');return;}if(confirm('Delete student with ID "'+sid+'"? This cannot be undone.')){window.location.href='DeleteStudentServlet?studentId='+encodeURIComponent(sid);}}
 </script>
 </body>
 </html>
