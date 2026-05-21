@@ -66,7 +66,7 @@
         .nav-link { color: rgba(255, 255, 255, 0.8) !important; font-weight: 500; margin: 0 0.3rem; padding: 8px 18px !important; border-radius: 40px; transition: all 0.3s; }
         .nav-link:hover { background: rgba(255, 255, 255, 0.1); color: white !important; }
         .nav-link.active { background: linear-gradient(135deg, #a855f7, #7c3aed); color: white !important; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
-        .btn-logout { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 8px 22px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.3s; margin-left: 8px; }
+        .btn-logout { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; transition: all 0.3s; margin-left: 8px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .btn-logout:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(239, 68, 68, 0.3); }
 
         /* Container */
@@ -164,10 +164,12 @@
                 <li class="nav-item"><a class="nav-link" href="courses">Courses</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin?action=queue">Queue</a></li>
                 <li class="nav-item"><a class="nav-link" href="manage-students.jsp">Students</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage-admins">Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage-enrollments">Enrollments</a></li>
                 <li class="nav-item"><a class="nav-link active" href="manage-lecturers">Lecturers</a></li>
                 <li class="nav-item"><a class="nav-link" href="reports.jsp">Reports</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin-feedback.jsp">Feedback</a></li>
-                <li class="nav-item"><a class="btn-logout" href="logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                <li class="nav-item"><a class="btn-logout" href="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </div>
     </div>
