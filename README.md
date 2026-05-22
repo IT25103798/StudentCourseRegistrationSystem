@@ -71,62 +71,84 @@ Rather than relying on a traditional database, all data is persisted in pipe-del
 
 ```
 StudentCourseRegistrationSystem/
-├── data/                          # Flat-file data store
+├── data/                                        # Flat-file data store
 │   ├── courses.txt
-│   ├── users.txt
-│   ├── students.txt
+│   ├── feedbacks.txt
 │   ├── lecturers.txt
+│   ├── queue.txt
 │   ├── registrations.txt
 │   ├── rejected_registrations.txt
-│   ├── feedbacks.txt
-│   └── queue.txt
+│   ├── students.txt
+│   └── users.txt
+│
 ├── src/main/
 │   ├── java/com/registration/
-│   │   ├── dao/                   # Data Access Objects
+│   │   ├── dao/                                 # Data Access Objects
 │   │   │   ├── CourseDAO.java
 │   │   │   ├── FeedbackDAO.java
 │   │   │   ├── LecturerDAO.java
 │   │   │   ├── RegistrationDAO.java
 │   │   │   └── UserDAO.java
-│   │   ├── model/                 # Domain models
-│   │   │   ├── User.java          # Abstract base class
-│   │   │   ├── Student.java
+│   │   │
+│   │   ├── model/                               # Domain models
 │   │   │   ├── Admin.java
+│   │   │   ├── Course.java
+│   │   │   ├── Feedback.java
 │   │   │   ├── Lecturer.java
 │   │   │   ├── LecturerUser.java
-│   │   │   ├── Course.java
 │   │   │   ├── Registration.java
 │   │   │   ├── RegistrationRequest.java
-│   │   │   └── Feedback.java
-│   │   ├── servlet/               # HTTP request handlers
-│   │   │   ├── LoginServlet.java
-│   │   │   ├── RegisterServlet.java
-│   │   │   ├── CourseServlet.java
-│   │   │   ├── RegistrationServlet.java
-│   │   │   ├── AdminServlet.java
+│   │   │   ├── Student.java
+│   │   │   └── User.java                        # Abstract base class
+│   │   │
+│   │   ├── servlet/                             # HTTP request handlers
 │   │   │   ├── AdminManagementServlet.java
-│   │   │   ├── LecturerServlet.java
-│   │   │   ├── LecturerDashboardServlet.java
+│   │   │   ├── AdminServlet.java
+│   │   │   ├── ApproveFeedbackServlet.java
+│   │   │   ├── CourseServlet.java
+│   │   │   ├── DeleteStudentServlet.java
 │   │   │   ├── EnrollmentManagementServlet.java
 │   │   │   ├── FeedbackServlet.java
-│   │   │   └── ...
-│   │   └── util/                  # Utilities
-│   │       ├── FileHandler.java   # File I/O abstraction
-│   │       ├── QueueManager.java  # FIFO registration queue
-│   │       └── SortUtil.java      # Insertion sort algorithms
-│   └── webapp/                    # JSP views
-│       ├── login.jsp
-│       ├── signup.jsp
-│       ├── student-dashboard.jsp
-│       ├── register-course.jsp
+│   │   │   ├── LecturerDashboardServlet.java
+│   │   │   ├── LecturerServlet.java
+│   │   │   ├── LoginServlet.java
+│   │   │   ├── LogoutServlet.java
+│   │   │   ├── QueueStatusServlet.java
+│   │   │   ├── RegisterServlet.java
+│   │   │   ├── RegistrationServlet.java
+│   │   │   ├── UpdateFeedbackServlet.java
+│   │   │   ├── UpdateProfileServlet.java
+│   │   │   └── UpdateStudentServlet.java
+│   │   │
+│   │   └── util/                                # Utilities
+│   │       ├── FileHandler.java                 # File I/O abstraction
+│   │       ├── QueueManager.java                # FIFO registration queue
+│   │       └── SortUtil.java                    # Insertion sort algorithms
+│   │
+│   └── webapp/                                  # JSP views + web config
+│       ├── WEB-INF/
+│       │   └── web.xml                          # Servlet mappings
 │       ├── admin-dashboard.jsp
+│       ├── admin-feedback.jsp
 │       ├── admin-queue.jsp
-│       ├── manage-students.jsp
-│       ├── manage-lecturers.jsp
+│       ├── course-list.jsp
+│       ├── index.jsp
+│       ├── lecturer-dashboard.jsp
+│       ├── login.jsp
+│       ├── manage-admins.jsp
 │       ├── manage-enrollments.jsp
+│       ├── manage-lecturers.jsp
+│       ├── manage-students.jsp
+│       ├── profile-settings.jsp
+│       ├── queue-status.jsp
+│       ├── register-course.jsp
 │       ├── reports.jsp
-│       └── ...
-└── pom.xml
+│       ├── signup.jsp
+│       ├── student-courses.jsp
+│       └── student-dashboard.jsp
+│
+│
+└── pom.xml                                      # Maven build configuration
 ```
 
 ---
