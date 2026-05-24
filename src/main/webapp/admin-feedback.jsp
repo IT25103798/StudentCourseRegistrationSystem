@@ -126,16 +126,21 @@
             box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
         }
 
-        .btn-logout {
+                .btn-logout {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
             border: none;
-            padding: 8px 22px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1rem;
             transition: all 0.3s;
             margin-left: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .btn-logout:hover {
@@ -400,6 +405,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="manage-students.jsp">Students</a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="manage-admins">Admins</a></li>
+                <li class="nav-item"><a class="nav-link" href="manage-enrollments">Enrollments</a></li>
                 <li class="nav-item"><a class="nav-link" href="manage-lecturers">Lecturers</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="reports.jsp">Reports</a>
@@ -408,9 +415,7 @@
                     <a class="nav-link active" href="admin-feedback.jsp">Feedback</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn-logout" href="logout">
-                        <i class="fas fa-sign-out-alt me-2"></i>Logout
-                    </a>
+                    <a class="btn-logout" href="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
                 </li>
             </ul>
         </div>
