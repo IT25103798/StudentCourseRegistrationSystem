@@ -1,4 +1,4 @@
-# 🎓 Student Course Registration System
+# 🎓 Student Course Registration System 
 
 A full-stack **Java Web Application** for managing university course registrations, built with Java Servlets, JSP, and file-based persistence — no database required.
 
